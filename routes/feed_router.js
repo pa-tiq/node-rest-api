@@ -10,7 +10,7 @@ router.post(
   "/post",
   [
     body("title").trim().isLength({ min: 5 }),
-    body("concent").trim().isLength({ min: 5 }),
+    body("content").trim().isLength({ min: 5 }),
   ],
   feedController.createPost
 ); // POST /feed/post

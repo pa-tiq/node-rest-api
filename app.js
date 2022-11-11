@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
+const mongoConnect = require('./util/database');
 
 const feedRoutes = require("./routes/feed_router");
 const app = express();
@@ -17,4 +17,7 @@ app.use((req, res, next) => {
 
 app.use("/feed", feedRoutes); // GET /feed/
 
-app.listen(8080);
+mongoConnect((client)=>{
+  app.listen(8080);
+})
+
