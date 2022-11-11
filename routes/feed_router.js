@@ -6,6 +6,9 @@ const feedController = require("../controllers/feed_controller");
 const router = express.Router();
 
 router.get("/posts", feedController.getPosts); // GET /feed/posts
+
+router.get("/post:postid", feedController.getPost);
+
 router.post(
   "/post",
   [
