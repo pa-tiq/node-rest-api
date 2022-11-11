@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
+
 const feedRoutes = require("./routes/feed_router");
 const app = express();
 
