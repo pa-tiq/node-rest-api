@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const feedRoutes = require("./routes/feed");
+const feedRoutes = require("./routes/feed_router");
 const app = express();
 
 app.use(bodyParser.json()); // parse incoming JSON data
