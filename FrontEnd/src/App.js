@@ -85,7 +85,8 @@ class App extends Component {
           isAuth: true,
           token: resData.token,
           authLoading: false,
-          userId: resData.userId
+          userId: resData.userId,
+          status: resData.status
         });
         localStorage.setItem('token', resData.token);
         localStorage.setItem('userId', resData.userId);
@@ -192,7 +193,7 @@ class App extends Component {
             path="/"
             exact
             render={props => (
-              <FeedPage userId={this.state.userId} token={this.state.token} />
+              <FeedPage userId={this.state.userId} token={this.state.token}/>
             )}
           />
           <Route

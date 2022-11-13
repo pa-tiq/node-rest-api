@@ -65,7 +65,51 @@ exports.login = (req, res, next) => {
         keys.jsonwebtoken_secret,
         { expiresIn: '1h' }
       );
-      res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+      res.status(200).json({
+        token: token,
+        userId: loadedUser._id.toString(),
+      });
+    })
+    .catch((error) => {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+      }
+      next(error);
+    });
+};
+
+exports.getUserStatus = (req, res, next) => {
+  User.findById(req.userId)
+    .then((user) => {
+      if (!user) {
+        const error = new Error('User not found');
+        error.statusCode = 404;
+        throw error;
+      }
+      return res.status(200).json({ status: user.status });
+    })
+    .catch((error) => {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+      }
+      next(error);
+    });
+};
+
+exports.updateUserStatus = (req, res, next) => {
+  const newStatus = req.body.status;
+  User.findById(req.userId)
+    .then((user) => {
+      if (!user) {
+        const error = new Error('User not found');
+        error.statusCode = 404;
+        throw error;
+      }
+      user.status = newStatus;
+      return user.save();
+    })
+    .then((result) => {
+      res.status(200).json({ message: 'Status updated' });
     })
     .catch((error) => {
       if (!error.statusCode) {
