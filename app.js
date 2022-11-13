@@ -6,6 +6,7 @@ const multer = require("multer");
 const { v4:uuidv4 } = require('uuid');
 
 const feedRoutes = require("./routes/feed_router");
+const authRoutes = require("./routes/auth_router");
 
 const app = express();
 
@@ -46,13 +47,17 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization"); //allow origins to use certain headers
   next(); //the request can now continue
 });
+
 app.use("/feed", feedRoutes); // GET /feed/
+app.use("/auth", authRoutes); // GET /auth/
+
 app.use((error, req, res, next) => {
   // executed whenever an error is thrown with throw() or forwarded with next()
   console.log(error);
   const status = error.statusCode || 500; // if error.statusCode is undefined, then status = 500
   const message = error.message;
-  res.status(status).json({ message: message });
+  const data = error.data;
+  res.status(status).json({ message: message, data: data });
 });
 
 mongoConnect((client) => {
