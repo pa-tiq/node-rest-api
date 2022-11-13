@@ -24,7 +24,6 @@ const userSchema = new Schema(
       ref: 'Post'
     }]
   },
-  { timestamps: true }
 );
 
 module.exports = mongoose.model("User", userSchema);

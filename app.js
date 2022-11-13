@@ -32,11 +32,14 @@ const fileFilter = (req, file, callback) => {
 };
 
 app.use(bodyParser.json()); // parse incoming JSON data
+
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image") 
   //extract a single file in a field named 'image' in the request
 ); //every incoming request will be parsed for files
+
 app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use((req, res, next) => {
   //middleware to solve CORS error
   res.setHeader("Access-Control-Allow-Origin", "*"); //allow origins to access my data
@@ -44,7 +47,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, PATCH, DELETE"
   ); //allow origins to use my HTTP methods
-  res.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization"); //allow origins to use certain headers
+  res.setHeader("Access-Control-Allow-Headers", "Content-type, Authorization"); //allow origins to use these two headers
   next(); //the request can now continue
 });
 
